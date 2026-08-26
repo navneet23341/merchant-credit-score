@@ -1,0 +1,74 @@
+{
+    "model_version": "1.0",
+    "random_state": 42,
+    "dataset": {
+        "total_samples": 1000,
+        "training_samples": 800,
+        "test_samples": 200,
+        "feature_count": 15,
+        "features": [
+            "monthly_revenue",
+            "revenue_growth_rate",
+            "revenue_consistency",
+            "refund_rate",
+            "chargeback_rate",
+            "settlement_velocity_days",
+            "customer_repeat_rate",
+            "payment_diversity_score",
+            "peak_season_ratio",
+            "failed_payment_rate",
+            "avg_transaction_value",
+            "transaction_volume_monthly",
+            "dispute_resolution_rate",
+            "late_settlement_frequency",
+            "revenue_concentration_risk"
+        ]
+    },
+    "regression": {
+        "model": "XGBRegressor",
+        "cross_validation": {
+            "folds": 5,
+            "rmse_mean": 11.491000138156043,
+            "rmse_std": 0.396814931102954,
+            "fold_rmse": [
+                12.030353304652596,
+                10.95217033720782,
+                11.142848067227535,
+                11.775354827912498,
+                11.554274153779765
+            ]
+        },
+        "holdout_test": {
+            "rmse": 11.832200188625569,
+            "mae": 9.386218070983887,
+            "r2": 0.9840294122695923
+        }
+    },
+    "classification": {
+        "model": "XGBClassifier",
+        "classes": [
+            "average",
+            "bad",
+            "excellent",
+            "good",
+            "poor"
+        ],
+        "cross_validation": {
+            "folds": 5,
+            "macro_f1_mean": 0.9979031339031339,
+            "macro_f1_std": 0.0041937321937322025,
+            "fold_macro_f1": [
+                1.0,
+                0.9895156695156695,
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "holdout_test": {
+            "macro_f1": 1.0,
+            "weighted_f1": 1.0,
+            "accuracy": 1.0
+        }
+    }
+}

@@ -1,0 +1,80 @@
+{
+    "merchant_id": "MID_0002",
+    "credit_score": 643.03,
+    "shap_base_value": 703.78,
+    "positive_factors": [
+        {
+            "feature": "late_settlement_frequency",
+            "display_name": "Late Settlement Frequency",
+            "value": 0.2144,
+            "impact": 8.6311616897583,
+            "explanation": "Low late settlement frequency (21.4%) helped your score by 8.6 points."
+        },
+        {
+            "feature": "monthly_revenue",
+            "display_name": "Monthly Revenue",
+            "value": 43012.87,
+            "impact": 1.1933667659759521,
+            "explanation": "High monthly revenue (\u20b943,013) helped your score by 1.2 points."
+        },
+        {
+            "feature": "avg_transaction_value",
+            "display_name": "Average Transaction Value",
+            "value": 132.0771,
+            "impact": 0.7346439957618713,
+            "explanation": "Average Transaction Value (\u20b9132) helped your score by 0.7 points."
+        },
+        {
+            "feature": "transaction_volume_monthly",
+            "display_name": "Monthly Transaction Volume",
+            "value": 38.9293,
+            "impact": 0.23579327762126923,
+            "explanation": "High monthly transaction volume (39) helped your score by 0.2 points."
+        },
+        {
+            "feature": "peak_season_ratio",
+            "display_name": "Peak Season Ratio",
+            "value": 1.0443,
+            "impact": 0.16398297250270844,
+            "explanation": "Peak Season Ratio (104.4%) helped your score by 0.2 points."
+        }
+    ],
+    "negative_factors": [
+        {
+            "feature": "dispute_resolution_rate",
+            "display_name": "Dispute Resolution Rate",
+            "value": 0.4166,
+            "impact": -33.74678039550781,
+            "explanation": "Low dispute resolution rate (41.7%) reduced your score by 33.7 points."
+        },
+        {
+            "feature": "customer_repeat_rate",
+            "display_name": "Customer Repeat Rate",
+            "value": 0.1542,
+            "impact": -12.709615707397461,
+            "explanation": "Low customer repeat rate (15.4%) reduced your score by 12.7 points."
+        },
+        {
+            "feature": "failed_payment_rate",
+            "display_name": "Failed Payment Rate",
+            "value": 0.2786,
+            "impact": -7.54688024520874,
+            "explanation": "High failed payment rate (27.9%) reduced your score by 7.5 points."
+        },
+        {
+            "feature": "payment_diversity_score",
+            "display_name": "Payment Diversity",
+            "value": 0.3896,
+            "impact": -5.096827507019043,
+            "explanation": "Low payment diversity (0.39) reduced your score by 5.1 points."
+        },
+        {
+            "feature": "settlement_velocity_days",
+            "display_name": "Settlement Speed",
+            "value": 5.4882,
+            "impact": -5.027426719665527,
+            "explanation": "High settlement speed (5.5 days) reduced your score by 5.0 points."
+        }
+    ],
+    "waterfall_plot": "/home/mint/merchant-credit-score/ml/artifacts/merchant_explanations/MID_0002_waterfall.png"
+}

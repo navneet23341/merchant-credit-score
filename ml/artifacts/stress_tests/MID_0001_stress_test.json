@@ -1,0 +1,155 @@
+{
+    "merchant_id": "MID_0001",
+    "current_score": 773.54,
+    "benchmark_method": "Top 25% of merchants by credit score",
+    "benchmark_score_threshold": 776.0,
+    "benchmark_population_size": 252,
+    "top_improvements": [
+        {
+            "feature": "revenue_consistency",
+            "display_name": "Revenue Consistency",
+            "current_value": 0.8283,
+            "benchmark_value": 0.921675,
+            "current_value_display": "82.8%",
+            "benchmark_value_display": "92.2%",
+            "current_score": 773.54,
+            "projected_score": 785.87,
+            "score_improvement": 12.33,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        },
+        {
+            "feature": "customer_repeat_rate",
+            "display_name": "Customer Repeat Rate",
+            "current_value": 0.306,
+            "benchmark_value": 0.59975,
+            "current_value_display": "30.6%",
+            "benchmark_value_display": "60.0%",
+            "current_score": 773.54,
+            "projected_score": 784.23,
+            "score_improvement": 10.69,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        },
+        {
+            "feature": "revenue_growth_rate",
+            "display_name": "Revenue Growth",
+            "current_value": 0.1157,
+            "benchmark_value": 0.159525,
+            "current_value_display": "11.6%",
+            "benchmark_value_display": "16.0%",
+            "current_score": 773.54,
+            "projected_score": 779.03,
+            "score_improvement": 5.49,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        }
+    ],
+    "all_scenarios": [
+        {
+            "feature": "revenue_consistency",
+            "display_name": "Revenue Consistency",
+            "current_value": 0.8283,
+            "benchmark_value": 0.921675,
+            "current_value_display": "82.8%",
+            "benchmark_value_display": "92.2%",
+            "current_score": 773.54,
+            "projected_score": 785.87,
+            "score_improvement": 12.33,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        },
+        {
+            "feature": "customer_repeat_rate",
+            "display_name": "Customer Repeat Rate",
+            "current_value": 0.306,
+            "benchmark_value": 0.59975,
+            "current_value_display": "30.6%",
+            "benchmark_value_display": "60.0%",
+            "current_score": 773.54,
+            "projected_score": 784.23,
+            "score_improvement": 10.69,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        },
+        {
+            "feature": "revenue_growth_rate",
+            "display_name": "Revenue Growth",
+            "current_value": 0.1157,
+            "benchmark_value": 0.159525,
+            "current_value_display": "11.6%",
+            "benchmark_value_display": "16.0%",
+            "current_score": 773.54,
+            "projected_score": 779.03,
+            "score_improvement": 5.49,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        },
+        {
+            "feature": "dispute_resolution_rate",
+            "display_name": "Dispute Resolution Rate",
+            "current_value": 0.7981,
+            "benchmark_value": 0.9326,
+            "current_value_display": "79.8%",
+            "benchmark_value_display": "93.3%",
+            "current_score": 773.54,
+            "projected_score": 777.7,
+            "score_improvement": 4.16,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        },
+        {
+            "feature": "payment_diversity_score",
+            "display_name": "Payment Diversity",
+            "current_value": 0.5937,
+            "benchmark_value": 0.836925,
+            "current_value_display": "0.59",
+            "benchmark_value_display": "0.84",
+            "current_score": 773.54,
+            "projected_score": 776.06,
+            "score_improvement": 2.52,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        },
+        {
+            "feature": "chargeback_rate",
+            "display_name": "Chargeback Rate",
+            "current_value": 0.0059,
+            "benchmark_value": 0.0039,
+            "current_value_display": "0.6%",
+            "benchmark_value_display": "0.4%",
+            "current_score": 773.54,
+            "projected_score": 774.18,
+            "score_improvement": 0.63,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        },
+        {
+            "feature": "refund_rate",
+            "display_name": "Refund Rate",
+            "current_value": 0.0746,
+            "benchmark_value": 0.0218,
+            "current_value_display": "7.5%",
+            "benchmark_value_display": "2.2%",
+            "current_score": 773.54,
+            "projected_score": 774.16,
+            "score_improvement": 0.61,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        },
+        {
+            "feature": "late_settlement_frequency",
+            "display_name": "Late Settlement Frequency",
+            "current_value": 0.0576,
+            "benchmark_value": 0.026125,
+            "current_value_display": "5.8%",
+            "benchmark_value_display": "2.6%",
+            "current_score": 773.54,
+            "projected_score": 774.03,
+            "score_improvement": 0.49,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        },
+        {
+            "feature": "settlement_velocity_days",
+            "display_name": "Settlement Speed",
+            "current_value": 1.8438,
+            "benchmark_value": 1.301825,
+            "current_value_display": "1.8 days",
+            "benchmark_value_display": "1.3 days",
+            "current_score": 773.54,
+            "projected_score": 773.71,
+            "score_improvement": 0.17,
+            "benchmark_definition": "Benchmark derived from high-quality merchants (top 25% by credit score)."
+        }
+    ]
+}

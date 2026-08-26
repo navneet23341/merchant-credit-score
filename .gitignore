@@ -1,0 +1,24 @@
+.venv/
+# Python
+__pycache__/
+*.py[cod]
+
+# ML artifacts
+# Uncomment these ONLY if you don't want models/images in Git
+# ml/artifacts/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Node
+node_modules/
+dist/
+build/
+
+# Environment variables
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db

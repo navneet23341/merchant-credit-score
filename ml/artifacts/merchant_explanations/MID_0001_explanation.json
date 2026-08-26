@@ -1,0 +1,66 @@
+{
+    "merchant_id": "MID_0001",
+    "credit_score": 773.54,
+    "shap_base_value": 703.78,
+    "positive_factors": [
+        {
+            "feature": "dispute_resolution_rate",
+            "display_name": "Dispute Resolution Rate",
+            "value": 0.7981,
+            "impact": 21.508865356445312,
+            "explanation": "High dispute resolution rate (79.8%) helped your score by 21.5 points."
+        },
+        {
+            "feature": "late_settlement_frequency",
+            "display_name": "Late Settlement Frequency",
+            "value": 0.0576,
+            "impact": 14.72514820098877,
+            "explanation": "Low late settlement frequency (5.8%) helped your score by 14.7 points."
+        },
+        {
+            "feature": "revenue_consistency",
+            "display_name": "Revenue Consistency",
+            "value": 0.8283,
+            "impact": 14.685259819030762,
+            "explanation": "High revenue consistency (82.8%) helped your score by 14.7 points."
+        },
+        {
+            "feature": "chargeback_rate",
+            "display_name": "Chargeback Rate",
+            "value": 0.0059,
+            "impact": 6.044175624847412,
+            "explanation": "Low chargeback rate (0.6%) helped your score by 6.0 points."
+        },
+        {
+            "feature": "monthly_revenue",
+            "display_name": "Monthly Revenue",
+            "value": 158924.44,
+            "impact": 3.9429068565368652,
+            "explanation": "High monthly revenue (\u20b9158,924) helped your score by 3.9 points."
+        }
+    ],
+    "negative_factors": [
+        {
+            "feature": "payment_diversity_score",
+            "display_name": "Payment Diversity",
+            "value": 0.5937,
+            "impact": -0.6338140368461609,
+            "explanation": "Low payment diversity (0.59) reduced your score by 0.6 points."
+        },
+        {
+            "feature": "transaction_volume_monthly",
+            "display_name": "Monthly Transaction Volume",
+            "value": 554.9191,
+            "impact": -0.45045262575149536,
+            "explanation": "Low monthly transaction volume (555) reduced your score by 0.5 points."
+        },
+        {
+            "feature": "avg_transaction_value",
+            "display_name": "Average Transaction Value",
+            "value": 997.0941,
+            "impact": -0.14963819086551666,
+            "explanation": "Average Transaction Value (\u20b9997) reduced your score by 0.1 points."
+        }
+    ],
+    "waterfall_plot": "/home/mint/merchant-credit-score/ml/artifacts/merchant_explanations/MID_0001_waterfall.png"
+}
