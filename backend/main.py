@@ -1,8 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from backend.services.ml_service import (
-    get_stress_test
-)
+
 
 from backend.services.ml_service import (
     merchants_df,
