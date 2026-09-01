@@ -9,6 +9,7 @@ from backend.services.ml_service import (
     get_explanation,
     get_stress_test,
     get_merchant_dashboard,
+    get_hinglish_explanation,
 )
 
 
@@ -235,6 +236,35 @@ def stress_test_merchant(merchant_id: str):
         raise HTTPException(
             status_code=404,
             detail="Merchant not found"
+        )
+
+    return result
+
+# ============================================================
+# HINGLISH AI EXPLANATION
+# ============================================================
+
+@app.get(
+    "/api/merchant/{merchant_id}/hinglish-explain",
+    tags=["AI Explanation"],
+)
+def merchant_hinglish_explanation(
+    merchant_id: str,
+):
+
+    result = get_hinglish_explanation(
+        merchant_id
+    )
+
+    if result is None:
+
+        raise HTTPException(
+            status_code=404,
+            detail=(
+                f"Merchant "
+                f"'{merchant_id}' "
+                f"not found."
+            ),
         )
 
     return result

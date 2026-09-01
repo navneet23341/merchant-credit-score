@@ -1,5 +1,12 @@
 from pathlib import Path
 import json
+import ast
+
+import os
+
+from dotenv import load_dotenv
+from openai import OpenAI
+
 
 import joblib
 import pandas as pd
@@ -7,7 +14,23 @@ import pandas as pd
 import numpy as np
 import shap 
 
+load_dotenv()
 
+# NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
+
+# print("NVIDIA KEY FOUND:", bool(NVIDIA_API_KEY))
+
+# nvidia_client = OpenAI(
+#     base_url="https://integrate.api.nvidia.com/v1",
+#     api_key=NVIDIA_API_KEY,
+# )
+
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+
+openrouter_client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=OPENROUTER_API_KEY,
+)
 # ============================================================
 # PATHS
 # ============================================================
@@ -531,7 +554,14 @@ def get_merchant_dashboard(
                 float(
                     merchant["monthly_revenue"]
                 ),
+            "score_trajectory":ast.literal_eval(
+                merchant["score_trajectory"]
+                ),
 
+            "projected_score_3months":
+                float(
+                    merchant["projected_score_3months"]
+                ),
         },
 
         "credit": score_data,
@@ -542,4 +572,149 @@ def get_merchant_dashboard(
         "stress_test":
             stress_test,
 
+    }
+
+def get_hinglish_explanation(merchant_id: str):
+
+    merchant = get_merchant(merchant_id)
+
+    if merchant is None:
+        return None
+
+    score_data = get_score(merchant_id)
+
+    explanation = get_explanation(merchant_id)
+
+    #stress_test = get_stress_test(merchant_id)
+
+    # -----------------------------------------
+    # Extract top positive factor
+    # -----------------------------------------
+
+    positive_factors = (
+        explanation["positive_factors"]
+    )
+
+    top_positive = (
+        positive_factors[0]
+        if positive_factors
+        else None
+    )
+
+    # -----------------------------------------
+    # Extract top negative factor
+    # -----------------------------------------
+
+    negative_factors = (
+        explanation["negative_factors"]
+    )
+
+    top_negative = (
+        negative_factors[0]
+        if negative_factors
+        else None
+    )
+
+    # -----------------------------------------
+    # Build prompt
+    # -----------------------------------------
+
+    prompt = f"""
+You are a financial advisor explaining credit scores
+to Indian small business owners.
+
+Merchant details:
+
+- Category: {merchant["category"]}
+- City: {merchant["city"]}
+- Credit Score: {score_data["credit_score"]}
+
+Top positive factor:
+{top_positive["feature"] if top_positive else "None"}
+(pushes score up {abs(top_positive["impact"]) if top_positive else 0} points)
+
+Top negative factor:
+{top_negative["feature"] if top_negative else "None"}
+(pulls score down {abs(top_negative["impact"]) if top_negative else 0} points)
+
+Generate a friendly explanation in Hinglish
+(mix of Hindi and English).
+
+Keep it simple and under 100 words.
+Be encouraging but honest.
+
+Start exactly with:
+"Aapka score..."
+
+IMPORTANT:
+Only use information explicitly provided above.
+Do not invent financial information.
+Do not introduce generic financial advice unless it is supported
+by the provided factors.
+Do not assume reasons for a factor's value.
+If the negative factor is None, say that no major negative factor
+was identified in the provided analysis.
+
+Do not use markdown.
+Do not use bullet points.
+Do not mention that you are an AI.
+
+Do not explain what a factor "means" unless that meaning is explicitly
+provided in the input.
+
+Do not infer merchant behavior from a feature name.
+
+For example, do not say that a high dispute resolution rate means
+the merchant handles customer complaints effectively unless that
+information is explicitly provided.
+
+Do not give recommendations or financial advice unless they are
+directly supported by the provided factors.
+
+Only describe:
+1. The credit score.
+2. The provided positive factor and its impact.
+3. The provided negative factor and its impact.
+4. A simple encouraging conclusion based only on those facts.
+"""
+
+
+
+    # -----------------------------------------
+    # Call OpenRouter
+    # -----------------------------------------
+
+    response = openrouter_client.chat.completions.create(
+        model="minimax/minimax-m3:free",
+
+        messages=[
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+
+        temperature=0.7,
+        max_tokens=200,
+    )
+
+    # -----------------------------------------
+    # Extract response
+    # -----------------------------------------
+
+    message = response.choices[0].message
+
+    if message is None:
+        raise RuntimeError("LLM returned no message")
+
+    explanation_text = message.content
+
+    if not explanation_text:
+        raise RuntimeError("LLM returned no text content")
+
+    explanation_text = explanation_text.strip()
+
+    return {
+        "merchant_id": str(merchant_id),
+        "explanation": explanation_text,
     }
