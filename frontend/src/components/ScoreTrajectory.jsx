@@ -1,15 +1,56 @@
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
 function ScoreTrajectory({ data }) {
   if (!data?.merchant) return null;
 
-  const currentScore = data.credit?.credit_score ?? 0;
-  const trajectory = data.merchant.score_trajectory ?? 0;
-  const projectedScore =
-    data.merchant.projected_score_3months ?? currentScore;
+  const currentScore = Number(
+    data.credit?.credit_score ?? 0
+  );
 
-  const isPositive = trajectory >= 0;
+  const trajectory = Array.isArray(
+    data.merchant?.score_trajectory
+  )
+    ? data.merchant.score_trajectory
+        .map(Number)
+        .filter(Number.isFinite)
+    : [];
+
+  const projectedScore = Number(
+    data.merchant?.projected_score_3months ??
+      currentScore
+  );
+
+  const firstScore =
+    trajectory[0] ?? currentScore;
+
+  const latestScore =
+    trajectory[trajectory.length - 1] ??
+    currentScore;
+
+  const trajectoryChange =
+    latestScore - firstScore;
+
+  const isPositive = trajectoryChange >= 0;
+
+  // Convert the score array into chart data
+  const chartData = trajectory.map(
+    (score, index) => ({
+      period: `P${index + 1}`,
+      score,
+    })
+  );
 
   return (
-    <section className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
+    <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
+
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-xl font-semibold text-white">
@@ -17,11 +58,11 @@ function ScoreTrajectory({ data }) {
         </h2>
 
         <p className="mt-1 text-sm text-zinc-500">
-          Current performance and projected credit score
+          Historical performance and projected credit score
         </p>
       </div>
 
-      {/* Scores */}
+      {/* Score Summary */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
 
         {/* Current Score */}
@@ -35,7 +76,7 @@ function ScoreTrajectory({ data }) {
           </p>
         </div>
 
-        {/* Trajectory */}
+        {/* Trajectory Change */}
         <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
           <p className="text-sm text-zinc-500">
             Score Trajectory
@@ -48,16 +89,16 @@ function ScoreTrajectory({ data }) {
                 : "text-red-400"
             }`}
           >
-            {isPositive ? "+" : ""}
-            {trajectory.toFixed(2)}
+            {trajectoryChange >= 0 ? "+" : ""}
+            {trajectoryChange.toFixed(2)}
           </p>
 
           <p className="mt-1 text-xs text-zinc-500">
-            Recent trend
+            Historical change
           </p>
         </div>
 
-        {/* Projection */}
+        {/* Projected Score */}
         <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
           <p className="text-sm text-zinc-500">
             Projected Score
@@ -74,43 +115,114 @@ function ScoreTrajectory({ data }) {
 
       </div>
 
-      {/* Simple trajectory visualization */}
+      {/* Actual Line Chart */}
       <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900 p-5">
 
-        <div className="mb-3 flex items-center justify-between">
-          <span className="text-sm text-zinc-500">
-            Current
-          </span>
+        <div className="mb-5">
+          <h3 className="text-sm font-medium text-white">
+            Credit Score History
+          </h3>
 
-          <span className="text-sm text-zinc-500">
-            3 Months
-          </span>
+          <p className="mt-1 text-xs text-zinc-500">
+            Score movement across recent periods
+          </p>
         </div>
 
-        <div className="relative h-3 rounded-full bg-zinc-800">
+        <div className="h-64 w-full">
 
-          <div
-            className="h-3 rounded-full bg-blue-500 transition-all"
-            style={{
-              width: `${Math.min(
-                100,
-                Math.max(
-                  0,
-                  (projectedScore / 1000) * 100
-                )
-              )}%`,
-            }}
-          />
+          <ResponsiveContainer
+            width="100%"
+            height="100%"
+          >
+            <LineChart
+              data={chartData}
+              margin={{
+                top: 10,
+                right: 10,
+                left: 0,
+                bottom: 5,
+              }}
+            >
+
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="#27272a"
+              />
+
+              <XAxis
+                dataKey="period"
+                tick={{
+                  fill: "#71717a",
+                  fontSize: 12,
+                }}
+                axisLine={{
+                  stroke: "#3f3f46",
+                }}
+                tickLine={false}
+              />
+
+              <YAxis
+                domain={[
+                  "dataMin - 20",
+                  "dataMax + 20",
+                ]}
+                tick={{
+                  fill: "#71717a",
+                  fontSize: 12,
+                }}
+                axisLine={false}
+                tickLine={false}
+              />
+
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#18181b",
+                  border: "1px solid #3f3f46",
+                  borderRadius: "10px",
+                  color: "#ffffff",
+                }}
+                labelStyle={{
+                  color: "#a1a1aa",
+                }}
+                formatter={(value) => [
+                  Number(value).toFixed(2),
+                  "Credit Score",
+                ]}
+              />
+
+              <Line
+                type="monotone"
+                dataKey="score"
+                stroke="#3b82f6"
+                strokeWidth={3}
+                dot={{
+                  r: 4,
+                  fill: "#3b82f6",
+                  strokeWidth: 0,
+                }}
+                activeDot={{
+                  r: 6,
+                }}
+              />
+
+            </LineChart>
+          </ResponsiveContainer>
 
         </div>
 
+        {/* Start / End */}
         <div className="mt-3 flex justify-between text-xs text-zinc-500">
-          <span>{currentScore.toFixed(2)}</span>
+          <span>
+            Start: {firstScore.toFixed(2)}
+          </span>
 
-          <span>{projectedScore.toFixed(2)}</span>
+          <span>
+            Latest: {latestScore.toFixed(2)}
+          </span>
         </div>
 
       </div>
+
     </section>
   );
 }

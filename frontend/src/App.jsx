@@ -107,46 +107,50 @@ function App() {
             {/* SCORE BREAKDOWN */}
             {/* ========================= */}
 
-            <ScoreBreakdown
-              data={merchantData.explanation}
-            />
+            <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-            {/* ========================= */}
-            {/* SCORE TRAJECTORY */}
-            {/* ========================= */}
+              {/* LEFT COLUMN */}
+              <div className="space-y-6">
 
-            <ScoreTrajectory
-              data={merchantData}
-            />
+                <ScoreBreakdown
+                  data={merchantData.explanation}
+                />
 
-            {/* ========================= */}
-            {/* HINGLISH EXPLANATION */}
-            {/* ========================= */}
+                <HinglishExplanation
+                  merchantId={
+                    merchantData.merchant.merchant_id
+                  }
+                />
 
-            <HinglishExplanation
-              merchantId={
-                merchantData.merchant.merchant_id
-              }
-            />
+              </div>
 
-            {/* ========================= */}
-            {/* STRESS TEST */}
-            {/* ========================= */}
+              {/* RIGHT COLUMN */}
+              <div className="space-y-6">
 
-            <StressTester
-              merchantId={
-                merchantData.merchant.merchant_id
-              }
-              data={merchantData.stress_test}
-            />
+                <ScoreTrajectory
+                  data={merchantData}
+                />
 
-            {/* ========================= */}
-            {/* CAPITAL RECOMMENDATION */}
-            {/* ========================= */}
+                <CapitalRecommendation
+                  data={merchantData}
+                />
 
-            <CapitalRecommendation
-              data={merchantData}
-            />
+              </div>
+
+            </div>
+
+            {/* STRESS TESTER */}
+
+            <div className="mt-6">
+              <StressTester
+                merchantId={
+                  merchantData.merchant.merchant_id
+                }
+                data={merchantData.stress_test}
+              />
+            </div>
+
+            
           </>
         )}
       </main>

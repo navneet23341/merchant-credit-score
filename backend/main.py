@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 
 from backend.services.ml_service import (
@@ -10,8 +11,11 @@ from backend.services.ml_service import (
     get_stress_test,
     get_merchant_dashboard,
     get_hinglish_explanation,
+    run_custom_stress_test,
 )
 
+class StressTestRequest(BaseModel):
+    changes: dict[str, float]
 
 # ============================================================
 # APP
@@ -268,3 +272,31 @@ def merchant_hinglish_explanation(
         )
 
     return result
+
+@app.post(
+    "/api/merchant/{merchant_id}/stress-test",
+    tags=["Stress Testing"]
+)
+def custom_stress_test(
+    merchant_id: str,
+    request: StressTestRequest
+):
+    try:
+        result = run_custom_stress_test(
+            merchant_id,
+            request.changes
+        )
+
+        if result is None:
+            raise HTTPException(
+                status_code=404,
+                detail="Merchant not found"
+            )
+
+        return result
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=400,
+            detail=str(error)
+        )

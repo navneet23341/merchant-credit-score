@@ -502,6 +502,50 @@ def get_stress_test(merchant_id: str):
             scenarios,
     }
 
+#=============================================================
+##FOR INTERACTIVE TESTER
+#=============================================================
+def run_custom_stress_test(merchant_id, changes):
+    merchant = get_merchant(merchant_id)
+
+    if merchant is None:
+        return None
+
+    features = get_features(merchant)
+
+    current_score = predict_score(merchant)
+
+    for feature, value in changes.items():
+
+        if feature not in feature_columns:
+            raise ValueError(
+                f"Invalid feature: {feature}"
+            )
+
+        features.loc[
+            features.index[0],
+            feature
+        ] = float(value)
+
+    projected_score = float(
+        regression_model.predict(features)[0]
+    )
+
+    projected_score = max(
+        0,
+        min(1000, projected_score)
+    )
+
+    score_change = projected_score - current_score
+
+    return {
+        "merchant_id": merchant_id,
+        "current_score": round(current_score, 2),
+        "projected_score": round(projected_score, 2),
+        "score_change": round(score_change, 2),
+        "changes": changes,
+    }
+
 
 # ============================================================
 # COMPLETE MERCHANT DATA
@@ -562,6 +606,33 @@ def get_merchant_dashboard(
                 float(
                     merchant["projected_score_3months"]
                 ),
+            "recommendation": {
+
+                "eligible":
+                    bool(
+                        merchant["recommendation_eligible"]
+                    ),
+
+                "max_amount":
+                    float(
+                        merchant["recommendation_max_amount"]
+                    ),
+
+                "interest_rate":
+                    float(
+                        merchant["recommendation_interest_rate"]
+                    ),
+
+                "tenure_months":
+                    float(
+                        merchant["recommendation_tenure_months"]
+                    ),
+
+                "tier":
+                    str(
+                        merchant["recommendation_tier"]
+                    ),
+            },
         },
 
         "credit": score_data,
