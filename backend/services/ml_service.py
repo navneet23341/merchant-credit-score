@@ -606,7 +606,17 @@ def get_merchant_dashboard(
                 float(
                     merchant["projected_score_3months"]
                 ),
-            "recommendation": {
+        },
+
+        "credit": score_data,
+
+        "explanation":
+            explanation,
+
+        "stress_test":
+            stress_test,
+
+        "recommendation": {
 
                 "eligible":
                     bool(
@@ -633,16 +643,6 @@ def get_merchant_dashboard(
                         merchant["recommendation_tier"]
                     ),
             },
-        },
-
-        "credit": score_data,
-
-        "explanation":
-            explanation,
-
-        "stress_test":
-            stress_test,
-
     }
 
 def get_hinglish_explanation(merchant_id: str):

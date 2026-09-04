@@ -1,61 +1,92 @@
-function CapitalRecommendation({
-  maxAmount = "₹10,00,000",
-  interestRate = "15% p.a.",
-  tenure = "18 months",
-  actions = [
-    "Reduce refund rate below 8%",
-    "Increase repeat customer rate to 50%",
-    "Reduce failed payments below 5%",
-  ],
-}) {
+function CapitalRecommendation({ data }) {
+  console.log("CAPITAL DATA:", data);
+  const recommendation = data?.recommendation;
+
+  if (!recommendation) {
+    return null;
+  }
+
+  const {
+    eligible,
+    max_amount,
+    interest_rate,
+    tenure_months,
+    tier,
+  } = recommendation;
+
   return (
-    <section className="rounded-2xl border border-zinc-700 bg-[#181818] p-7">
-      <h2 className="mb-7 text-xl font-medium text-zinc-200">
-        Working capital recommendation
-      </h2>
+    <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
+      <div className="mb-6">
+        <h2 className="text-xl font-semibold text-white">
+          Working Capital Recommendation
+        </h2>
 
-      <div className="grid grid-cols-1 gap-6 text-center md:grid-cols-3">
-
-        <div>
-          <p className="text-sm text-zinc-500">
-            Max amount
-          </p>
-
-          <p className="mt-1 text-2xl text-zinc-200">
-            {maxAmount}
-          </p>
-        </div>
-
-        <div>
-          <p className="text-sm text-zinc-500">
-            Interest rate
-          </p>
-
-          <p className="mt-1 text-2xl text-zinc-200">
-            {interestRate}
-          </p>
-        </div>
-
-        <div>
-          <p className="text-sm text-zinc-500">
-            Tenure
-          </p>
-
-          <p className="mt-1 text-2xl text-zinc-200">
-            {tenure}
-          </p>
-        </div>
-
-      </div>
-
-      <div className="mt-7 rounded-xl bg-[#0b2b0d] px-5 py-4">
-        <p className="text-sm leading-6 text-green-500">
-          <span className="font-semibold">
-            Top 3 actions to improve your score:
-          </span>{" "}
-          {actions.join(", ")}.
+        <p className="mt-1 text-sm text-zinc-500">
+          Recommended financing based on merchant profile
         </p>
       </div>
+
+      {!eligible ? (
+        <div className="rounded-xl border border-red-900/50 bg-red-950/20 p-5">
+          <p className="text-sm font-medium text-red-400">
+            Not currently eligible
+          </p>
+
+          <p className="mt-2 text-sm leading-6 text-zinc-500">
+            The merchant does not currently meet the recommendation criteria.
+          </p>
+        </div>
+      ) : (
+        <>
+          <div className="mb-5 rounded-xl bg-[#111111] p-5">
+            <p className="text-sm text-zinc-500">
+              Maximum recommended amount
+            </p>
+
+            <p className="mt-2 text-4xl font-light text-blue-400">
+              ₹{(max_amount / 100000).toFixed(2)}L
+            </p>
+
+            <p className="mt-1 text-sm text-zinc-500">
+              {tier} financing tier
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3">
+
+            <div className="rounded-xl bg-[#111111] p-4">
+              <p className="text-xs text-zinc-500">
+                Interest Rate
+              </p>
+
+              <p className="mt-2 text-lg font-medium text-zinc-200">
+                {interest_rate}%
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-[#111111] p-4">
+              <p className="text-xs text-zinc-500">
+                Tenure
+              </p>
+
+              <p className="mt-2 text-lg font-medium text-zinc-200">
+                {tenure_months} months
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-[#111111] p-4">
+              <p className="text-xs text-zinc-500">
+                Tier
+              </p>
+
+              <p className="mt-2 text-lg font-medium text-zinc-200">
+                {tier}
+              </p>
+            </div>
+
+          </div>
+        </>
+      )}
     </section>
   );
 }

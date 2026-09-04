@@ -35,6 +35,7 @@ function App() {
       const data = await response.json();
 
       console.log("MERCHANT DATA:", data);
+      console.log("RECOMMENDATION:", data.recommendation);
 
       setMerchantData(data);
     } catch (error) {
